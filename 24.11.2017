@@ -1,0 +1,202 @@
+#include<iostream>
+using namespace std;
+
+//void quadrat(int *a)
+//{
+//	*a=(*a)*(*a);
+//}
+
+
+
+
+
+//void quadrSchleif(int *arr, int anz)
+//{
+//	for(int i = 0; i < anz; i++)
+//	{
+//		int tmp = arr[i];
+//		quadrat(&tmp);
+//		arr[i] = tmp;
+//	}
+//}
+
+int quadrat()
+{
+	int (*funcPtr)() = &quadrat;
+	cout << "Ich bin hier! " << funcPtr << endl;
+	return 0;
+	
+}
+
+
+
+int main()
+{
+	int x = 5;
+	int arr[5] = {1, 2, 3, 4, 5};
+	//
+	//cout << x << endl;
+	//quadrat(&x);
+	//cout << x << endl;
+
+	//quadrSchleif(arr, 5);
+
+	//cout << endl;
+
+		
+
+
+//int quadrat();
+//int (*funcPtr)() = &quadrat;
+	
+	quadrat();
+//cout << funcPtr;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+#include<iostream>
+using namespace std;
+
+
+long double summe(long double *f, int n)
+{
+	long double summe = 0;
+
+	for(int i = 0; i < n; i++)
+	{
+		summe = summe + f[i];
+	}
+	return summe;
+}
+
+long double durchschnitt(long double *f, int n)
+{
+	long double summe = 0;
+
+	for(int i = 0; i < n; i++)
+	{
+		summe = summe + f[i];
+	}
+	return summe/n;
+}
+
+void input(long *arr, int anz)
+{
+	for(int i = 0; i < anz; i++)
+	{
+		cout << "Geben Sie Zahl ein: ";
+		cin >> arr[i];
+	}
+}
+
+void output(long *arr, int anz)
+{
+	for(int i = 0; i < anz; i++)
+	{
+		cout << "Wert in arr["<<i<<"] = " << arr[i] << endl;
+	}
+}
+
+long double minZahl(long double *arr, int anz)
+{
+	long double min = arr[0];
+	for(int i = 0; i < anz; i++)
+	{
+		if(min > arr[i])
+		{
+			min = arr[i];
+		}
+	}
+	return min;
+}
+
+long double maxZahl(long double *arr, int anz)
+{
+	long double max = arr[0];
+	for(int i = 0; i < anz; i++)
+	{
+		if(max < arr[i])
+		{
+			max = arr[i];
+		}
+	}
+	return max;
+}
+
+
+int main()
+{
+	//long double arr[5] = {1, 2, 3, 4, 2};
+	//long longArr[4];
+	//
+	//cout << summe(arr, 5) << endl;
+	//cout << durchschnitt(arr, 5) << endl;
+	//input(longArr, 4);
+	//output(longArr, 4);
+
+
+	long double arr[100];
+	long double x = 0;
+	int i = 0;
+	long double sum = 0;
+
+	cout << "Geben Sie Zahl ein (nach dem 0 Starten wier rechnung!) MAXIMUM 100 Zaehelen!." << endl;
+	do
+	{
+		cin >> x;
+		arr[i]=x;
+		i++;
+	}
+	while(x!=0);
+	
+	sum = summe(arr, i);
+	cout <<"Die Summe ist: "<< sum << endl;
+	cout <<"Die Durchschnitt ist: "<<durchschnitt(arr, (i-1)) << endl;
+	
+	long double min = minZahl(arr,i-1);
+	cout <<"Das Minimum ist: "<< min << endl;
+
+	long double max = maxZahl(arr,i-1);
+	cout <<"Das Maximum ist: "<< max << endl;
+
+	cout <<"Abweichung vom Durchschnitt nach oben: "<< max-(durchschnitt(arr, (i-1))) << endl;
+	cout <<"Abweichung vom Durchschnitt nach unten: "<<(durchschnitt(arr, (i-1)))-min << endl;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
