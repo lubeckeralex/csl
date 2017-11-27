@@ -1,3 +1,33 @@
+/////////////////////////////////////////////////////
+#include<iostream>
+using namespace std;
+
+int *pointer;
+
+
+void quadrat()
+{
+	(*pointer) = (*pointer)*(*pointer);
+}
+
+
+void funk(int a)
+{
+	pointer = &a;
+	cout << "Vor dem quadrat() a = " << a << endl;
+	quadrat();
+	cout << "Nach dem quadrat() a = " << a << endl;
+
+}
+
+int main()
+{
+	int x = 6;
+	funk(x);
+}
+
+/////////////////////////////////////////////////////
+
 #include<iostream>
 using namespace std;
 
