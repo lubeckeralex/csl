@@ -1,0 +1,132 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int ostrlen(char *a)
+{
+	int len = 0;
+	while(a[len])
+	{
+		len++;
+	}
+	return (len+1);
+}
+
+void ostrcpy(char *a, char *b)
+{
+	for(int i = 0; i < ostrlen(b); i++)
+	{
+		a[i]=b[i];
+	}
+}
+
+int upstring(char *str)
+{
+	int toUp = 0;
+	for(int i = 0; i < ostrlen(str); i++)
+	{
+		if(((int)(str[i]) > 96)&&((int)(str[i]) < 123))
+		{
+			str[i] = ((int)(str[i]))-32;
+			toUp++;
+		}
+	}
+	return(toUp);
+}
+
+//void reversstring(char *string)
+//{
+//	int strlen = ostrlen(string)-2;
+//
+//	for(int i = 0; i <= strlen; i++)
+//	{
+//		char tmp = string[i];
+//		string[i]=string[strlen];
+//		string[strlen]=tmp;
+//		strlen--;
+//	}
+//}
+
+
+void reversstring(char *string)
+{
+	int strlen = ostrlen(string)-2;
+
+	for(int i = (strlen/2); i >= 0; i--)
+	{
+		char tmp = string[strlen - i];
+		string[strlen - i] = string[i];
+		string[i]=tmp;
+	}
+}
+
+
+
+void mixstring(char *ziel, char *strA, char *strB)
+{
+
+
+	int strLenA = ostrlen(strA)-2;
+	int strLenB = ostrlen(strB)-2;
+	int a = 0;
+	int b = 0;
+	int x = 0;
+	
+	
+	for(int i = 1; i < 30; i++)
+	{
+		if((i%2)==0)
+		{
+			ziel[x] = strB[b];
+			b++;
+			x++;
+
+		}
+
+
+		else
+		{
+			ziel[x] = strA[a];
+			a++;
+			x++;
+			
+		}
+	}
+	
+
+
+}
+
+
+
+
+int main()
+{
+	char mixArr[30] = {};
+	char arrA[10] = "12345678";
+	char arrB[7] = "hallo!";
+	
+
+	//cout << ostrlen(arrA) << endl;
+
+	//cout << "arrA: " << arrA << endl;
+	//cout << "arrB: " << arrB << endl;
+	//
+	//ostrcpy(arrA, arrB);
+
+	//cout << "arrA: " << arrA << endl;
+	//
+	//int anzToUp = upstring(arrB);
+
+	//cout << "arrB: " << arrB << " " << anzToUp << endl;
+
+	//reversstring(arrA);
+	//cout << arrA << endl;
+
+	mixstring(mixArr, arrA, arrB);
+
+	cout << mixArr << endl;
+
+	//cout << 1%2;
+
+}
