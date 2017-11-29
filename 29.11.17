@@ -1,0 +1,199 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int ostrlen(char *a)
+{
+	int len = 0;
+	while(a[len])
+	{
+		len++;
+	}
+	return (len+1);
+}
+
+void ostrcpy(char *a, char *b)
+{
+	for(int i = 0; i < ostrlen(b); i++)
+	{
+		a[i]=b[i];
+	}
+}
+
+int upstring(char *str)
+{
+	int toUp = 0;
+	for(int i = 0; i < ostrlen(str); i++)
+	{
+		if(((int)(str[i]) > 96)&&((int)(str[i]) < 123))
+		{
+			str[i] = ((int)(str[i]))-32;
+			toUp++;
+		}
+	}
+	return(toUp);
+}
+
+void reversstring(char *string)
+{
+	int strlen = ostrlen(string)-2;
+
+	for(int i = (strlen/2); i >= 0; i--)
+	{
+		char tmp = string[strlen - i];
+		string[strlen - i] = string[i];
+		string[i]=tmp;
+	}
+}
+
+
+
+void mixstring(char *ziel, char *strA, char *strB)
+{
+	int strLenA = ostrlen(strA)-2;
+	int strLenB = ostrlen(strB)-2;
+	int a = 0;
+	int b = 0;
+	int x = 0;
+
+	for(int i = 1; i < ostrlen(ziel); i++)
+	{
+		if( ((i%2)==0) && ((strLenB + 1)>0) )
+		{
+			ziel[x] = strB[b];
+			b++;
+			x++;
+			strLenB--;
+		}
+
+
+		else if( ((i%2)!=0) && ((strLenA + 1)>0) )
+		{
+			ziel[x] = strA[a];
+			a++;
+			x++;
+			strLenA--;			
+		}
+	}
+	ziel[a+b] = '\0';
+}
+
+
+
+void mixstring3(char *ziel, char *strA, char *strB)
+{
+	int a = 0;
+	int b = 0;
+	int x = 0;
+	int i = 1;
+
+	while(strA[a]||strB[b])
+	{
+		if( ((i%2)==0) && strB[b] )
+		{
+			ziel[x] = strB[b];
+			b++;
+			x++;
+		}
+
+
+		else if( ((i%2)!=0) && strA[b] )
+		{
+			ziel[x] = strA[a];
+			a++;
+			x++;
+		}
+		i++;
+	}
+	ziel[a+b] = '\0';
+}
+
+int ostrstr(char *strA, char *strB)
+{
+	int a = (ostrlen(strA)-2);
+	int b = (ostrlen(strB)-2);
+	int counter = 0;
+	int i = 0;
+
+	while((counter != a)&&(i != b))
+	{
+		if(strA[counter] == strB[i])
+		{
+			counter = counter + 1;
+		}
+		else
+		{
+			counter = 0;
+		}
+		i = i + 1;
+	}
+	int adr = i - a;
+	switch (counter)
+	{
+	case 0: return -1;
+		break;
+	default: return(adr);
+	}
+}
+
+
+
+
+void leftstr(char *ziel, char *quelle, int anz)
+{
+	int zielLen = ostrlen(ziel);
+	int quelleLen = ostrlen(quelle);
+	cout << zielLen;
+}
+
+
+
+
+
+
+int main()
+{
+	char mixArr[32];
+	char arrA[10] = "Otto";
+	char arrB[32] = "Und Otto ging baden";
+	
+	char suche[]="Alex";
+	char afrika[]="Seit immer mehr Migranten aus Afrika über das Mittelmeer kommen, sucht die EU nach neuen Strategien. Dazu gehört eine neue Art von Partnerschaft. Der Kontinent steht im Zentrum der politischen Aufmerksamkeit.";
+
+
+
+	//cout << ostrlen(arrA) << endl;
+
+	////cout << "arrA: " << arrA << endl;
+	////cout << "arrB: " << arrB << endl;
+	////
+	////ostrcpy(arrA, arrB);
+
+	////cout << "arrA: " << arrA << endl;
+	////
+	////int anzToUp = upstring(arrB);
+
+	////cout << "arrB: " << arrB << " " << anzToUp << endl;
+
+	////reversstring(arrA);
+	////cout << arrA << endl;
+
+	//mixstring(mixArr, arrA, arrB);
+
+	//cout << mixArr << endl;
+
+
+	//int erg = ostrstr(suche, afrika);
+	////ostrstr(arrA, arrB);
+	//cout << erg << endl;
+
+
+	//int erg2 = ostrstr(arrA, arrB);
+	////ostrstr(arrA, arrB);
+	//cout << erg2 << endl;
+
+	char arrEn[20];
+	char quelle[10] = "abcd";
+
+	leftstr(arrEn, quelle, 3);
+}
