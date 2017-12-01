@@ -1,0 +1,436 @@
+#include<iostream>
+using namespace std;
+
+int myAnz(int zahl)
+{
+        int digit = zahl;
+		int i=0;
+        for(;digit>0;i++){
+                digit/=10;
+        }
+        return (i);
+}
+
+
+
+int ostrlen(char *a)
+{
+	int len = 0;
+	while(a[len])
+	{
+		len++;
+	}
+	return (len+1);
+}
+
+void ostrcpy(char *a, char *b)
+{
+	for(int i = 0; i < ostrlen(b); i++)
+	{
+		a[i]=b[i];
+	}
+}
+void mySteuerFunk(int zahl, int anzZahlen, char *klZahl)
+{
+
+
+	 
+	//	switch(zahl)
+	//{
+	//case 10: cout << grZahl[1] << endl;
+	//	break;
+	//case 20: cout << grZahl[2] << endl;
+	//	break;
+	//}
+
+}
+
+void antw(int ZahlLen, int zahl, char *ziel, char *arrA, char *arrB)//konkat antwort.
+{
+	for(int i = 1; i <= ZahlLen; i++)
+	{
+		cout << arrA[30];
+
+	}
+}
+
+int main()
+{
+
+    char *klZahl[] = {"null", "ein", "zwei", "drei", "vier", "fuenf", "sechs", "sieben", "acht", "neun"};
+	char *b[]={"zwanzig", "dreizig", "vierzig"};
+	
+	char *grZahl[] = {"hundert", "tausend", "million", "billion"};
+	//char *und[] = {"""und", "s"};
+
+
+
+
+	//char string[10];
+	//cin >> string;
+	//int zahl = 0;
+	//int i = 0;
+	////while(i < ostrlen(string))
+	////{
+	////	cout << string[i] << " + ";
+	////	zahl = zahl + (int)string[i];
+	////	i++;
+	////}
+
+
+
+	int zahl;
+	cout << "Gieb mier Zahl ein: " << endl;
+	cin >> zahl;
+	
+	int ZahlLen = myAnz(zahl);
+
+
+
+
+
+	 
+
+
+
+}
+
+
+
+
+
+
+
+
+
+///////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int ostrlen(char *a)
+{
+	int len = 0;
+	while(a[len])
+	{
+		len++;
+	}
+	return (len+1);
+}
+
+int ostrlen2(char *a)
+{
+	int len = 1;
+	while(a[len])
+	{
+		len++;
+	}
+	return (len);
+}
+
+void ostrcpy(char *a, char *b)
+{
+	for(int i = 0; i < ostrlen(b); i++)
+	{
+		a[i]=b[i];
+	}
+}
+
+int upstring(char *str)
+{
+	int toUp = 0;
+	for(int i = 0; i < ostrlen(str); i++)
+	{
+		if(((int)(str[i]) > 96)&&((int)(str[i]) < 123))
+		{
+			str[i] = ((int)(str[i]))-32;
+			toUp++;
+		}
+	}
+	return(toUp);
+}
+
+void reversstring(char *string)
+{
+	int strlen = ostrlen(string)-2;
+
+	for(int i = (strlen/2); i >= 0; i--)
+	{
+		char tmp = string[strlen - i];
+		string[strlen - i] = string[i];
+		string[i]=tmp;
+	}
+}
+
+void mixstring(char *ziel, char *strA, char *strB)
+{
+	int strLenA = ostrlen(strA)-2;
+	int strLenB = ostrlen(strB)-2;
+	int a = 0;
+	int b = 0;
+	int x = 0;
+
+	for(int i = 1; i < ostrlen(ziel); i++)
+	{
+		if( ((i%2)==0) && ((strLenB + 1)>0) )
+		{
+			ziel[x] = strB[b];
+			b++;
+			x++;
+			strLenB--;
+		}
+
+
+		else if( ((i%2)!=0) && ((strLenA + 1)>0) )
+		{
+			ziel[x] = strA[a];
+			a++;
+			x++;
+			strLenA--;			
+		}
+	}
+	ziel[a+b] = '\0';
+}
+
+void mixstring3(char *ziel, char *strA, char *strB)
+{
+	int a = 0;
+	int b = 0;
+	int x = 0;
+	int i = 1;
+
+	while(strA[a]||strB[b])
+	{
+		if( ((i%2)==0) && strB[b] )
+		{
+			ziel[x] = strB[b];
+			b++;
+			x++;
+		}
+
+
+		else if( ((i%2)!=0) && strA[b] )
+		{
+			ziel[x] = strA[a];
+			a++;
+			x++;
+		}
+		i++;
+	}
+	ziel[a+b] = '\0';
+}
+
+int ostrstr(char *strA, char *strB)
+{
+	int a = (ostrlen(strA)-2);
+	int b = (ostrlen(strB)-2);
+	int counter = 0;
+	int i = 0;
+
+	while((counter != a)&&(i != b))
+	{
+		if(strA[counter] == strB[i])
+		{
+			counter = counter + 1;
+		}
+		else
+		{
+			counter = 0;
+		}
+		i = i + 1;
+	}
+	int adr = i - a;
+	switch (counter)
+	{
+	case 0: return -1;
+		break;
+	default: return(adr);
+	}
+}
+
+void leftstr(char *ziel, char *quelle, int anz)
+{
+	int qLen = ostrlen(quelle)-1;
+	int zLen = ostrlen(ziel);
+	int ende = 0;
+	if((anz < zLen)&&(anz < qLen))
+	{
+		ende = anz;
+	}
+	else
+	{
+		if(qLen < zLen)
+		{
+			ende = qLen;
+		}
+		else
+		{
+			ende = zLen-1;
+		}
+	}
+
+	for(int i = 0; i < ende; i++)
+	{
+		ziel[i] = quelle[i];
+	}
+	ziel[ende] = '\0';
+}
+
+void rightstr(char *ziel, char *quelle, int anz)
+{
+	int qLen = ostrlen(quelle)-1;
+	int zLen = ostrlen(ziel);
+	int start = qLen - anz;
+	int i = 0;
+	if(anz < qLen)
+	{
+		if(qLen<zLen)
+		{
+			start = qLen - anz;
+		}
+	}
+	else
+	{
+		if(qLen<zLen)
+		{
+			if(anz>qLen)
+			{
+				start = 0;
+			}
+			else
+			{
+				start = zLen - qLen;
+			}
+		}
+	}
+	for(; start < qLen; start++, i++)
+	{
+		ziel[i]=quelle[start];
+	}
+	ziel[i]='\0';
+}
+
+void midstr(char *ziel, char *quelle, int pos, int anz)
+{
+	int qLen = ostrlen(quelle)-1;
+	int zLen = ostrlen(ziel);
+	int i = 0;
+	
+
+	if(anz < qLen)
+	{
+		
+	}
+
+
+
+	for(int x = pos-1; x < ((pos-1)+anz); x++)
+	{
+		ziel[i] = quelle[x];
+		i++;
+	}
+	ziel[i] = 0;
+
+}
+int main()
+{
+
+	// MIDSTR
+
+	char ziel[99];
+	char quelle[25] = "123456789";
+	char arrB[32] = "Und Otto ging baden";
+	
+	midstr(ziel, quelle, 3, 3);
+	cout << ziel << endl;
+
+
+
+	
+	////OSTRSTR
+	//char mixArr[32];
+	//char arrA[10] = "Otto";
+	//char arrB[32] = "Und Otto ging baden";
+	//cout << ostrstr(arrA, arrB) << endl;	
+
+	//char suche[]="über";
+	//char afrika[]="Seit immer mehr Migranten aus Afrika über das Mittelmeer kommen, sucht die EU nach neuen Strategien. Dazu gehört eine neue Art von Partnerschaft. Der Kontinent steht im Zentrum der politischen Aufmerksamkeit.";
+	//int erg = ostrstr(suche, afrika);
+	//
+	//cout << erg << endl;
+
+
+	//RIGHTSTR
+
+	//char quelle[111] = "01234";
+	//char ziel[10];
+	//ziel[9] = '\0';
+	//
+	//int anz = 10;
+	//rightstr(ziel, quelle, anz);
+	//cout << ziel << endl;
+
+
+
+	////LEFTSTR
+	//char quelle[111] = "12345678";
+	//char ziel[7];
+	//ziel[6] = '\0';
+	//
+	//int anz = 17;
+	//leftstr(ziel, quelle, anz);
+	//cout << ziel << endl;
+
+
+	/////////
+
+
+
+	//cout << ostrlen(arrA) << endl;
+
+	////cout << "arrA: " << arrA << endl;
+	////cout << "arrB: " << arrB << endl;
+	////
+	////ostrcpy(arrA, arrB);
+
+	////cout << "arrA: " << arrA << endl;
+	////
+	////int anzToUp = upstring(arrB);
+
+	////cout << "arrB: " << arrB << " " << anzToUp << endl;
+
+	//char arrA[10]="012345";
+	//reversstring(arrA);
+	//cout << arrA << endl;
+
+
+	//MIXSTRING
+	//char mixArr[100];
+	//char arrA[10]="012345";
+	//char arrB[20]="abcdef";
+	//mixstring(mixArr, arrA, arrB);
+	//cout << mixArr << endl;
+
+
+
+
+
+
+
+
+
+
+}
