@@ -1,0 +1,247 @@
+#include<iostream>
+#include <string.h>
+#include<time.h>
+#include <windows.h>
+using namespace std;
+
+struct Karte
+{
+	char name[10];
+	char farbe[10];
+	int wert;
+};
+
+
+
+
+void initFunk(struct Karte *karte, const char* farbe[], const char *name[])
+{
+	int x = 0;
+	for(int farbAnz = 0; farbAnz<4; farbAnz++)
+	{
+		for(int i = 0; i < 13; i++)
+		{
+			strcpy(karte[x].name, name[i]);
+			karte[x].wert = i + 2;
+			
+			if(karte[x].wert >= 10)
+			{
+				karte[x].wert = 10;
+			}
+			
+			strcpy(karte[x].farbe, farbe[farbAnz]);
+			x++;
+		}
+		karte[x-1].wert = 11;
+	}
+}
+
+
+void mixFunk(struct Karte *karte, struct Karte *Kartenstapel)
+{
+	int x;
+	time_t tim;
+	srand( time(&tim) );
+	int i;
+	for( i = 0; i <= 51; )
+	{
+		int a = rand()%52;
+		if( (Kartenstapel[a].wert)==0 )
+		{
+			Kartenstapel[a] = karte[i];
+			i++;
+		}
+	}
+}
+
+
+//void gameLoop(struct Karte *Kartenstapel)
+//{	
+//	char wiederholung;
+//	int arr[4];
+//	time_t tim;
+//	srand(time(&tim));
+//	int a = 0;
+//	int A = 0;
+//	int B = 0;
+//
+//	for(int i = 0; i < 2; i++)
+//	{
+//		Sleep(1500);
+//		a = rand()%52;
+//		A = A + Kartenstapel[a].wert;
+//		cout << "Spieler 1 nimmt Karte. " ;
+//		Sleep(500);
+//		cout << ". ";
+//		Sleep(500);
+//		cout << ". ";
+//		Sleep(500);
+//		cout << ". ";
+//		Sleep(500);
+//		cout << ". ";
+//		cout << "Das ist "<< Kartenstapel[a].name << " " << Kartenstapel[a].farbe <<  " hat wert " << Kartenstapel[a].wert << "." << endl;	
+//		
+//		cout << endl;
+//		
+//		a = rand()%52;
+//		B = B + Kartenstapel[a].wert;
+//		cout << "Spieler 2 nimmt Karte. ";
+//		Sleep(500);
+//		cout << ". ";
+//		Sleep(500);
+//		cout << ". ";
+//		Sleep(500);
+//		cout << ". ";
+//		Sleep(500);
+//		cout << ". ";
+//		cout << "Das ist "<< Kartenstapel[a].name << " " << Kartenstapel[a].farbe <<  " hat wert " << Kartenstapel[a].wert << "." << endl;	
+//		
+//		cout << endl;
+//
+//	}
+//
+//	
+//	if(A>B)
+//	{
+//		cout << "Mit " << A << " Punkten " <<" hat Spieler 1 gegen Spieler 2 mit " << B << " Punkten gewonen!" << endl;
+//	}
+//	if(A<B)
+//	{
+//		cout << "Mit " << B << " Punkten " <<" hat Spieler 2 gegen Spieler 1 mit " << A << " Punkten gewonen!" << endl;
+//	}
+//	else
+//	{
+//		cout << "Es ist unentschieden! Beide haben " << A << " points!" << endl;
+//	}
+//
+//	cout<< endl;
+//	cout<< "Wiederholen? j/n ";
+//	
+//	cin >> wiederholung;
+//
+//    switch(wiederholung)
+//    {
+//        case 'j': 
+//            gameLoop(Kartenstapel);
+//            break;
+//        case 'n': 
+//            cout << "Tschues!";
+//			Sleep(500);
+//        default: 
+//            break;
+//    }
+//
+//
+//
+//}
+
+
+
+
+//
+void gameLoop(struct Karte *Kartenstapel)
+{	
+	char wiederholung;
+	int arr[2] = {};
+	int nimmKarten[4] = {};
+	int spieler = 1;
+	time_t tim;
+	srand(time(&tim));
+	int randWert = 0;
+
+	for(int i = 0; i < 4; i++, spieler++)
+	{
+		if(spieler > 2)
+		{
+			spieler = 1;
+		}
+		do
+		{
+			randWert = rand()%52;
+		}
+		while( (nimmKarten[0]==randWert)||(nimmKarten[1]==randWert)||(nimmKarten[2]==randWert)||(nimmKarten[3]==randWert) );
+
+
+		arr[spieler-1] = arr[spieler-1] + Kartenstapel[randWert].wert;	
+		cout << "Spieler " << spieler << " nimmt Karte. " ;
+		cout << "Das ist "<< Kartenstapel[randWert].name << " " << Kartenstapel[randWert].farbe <<  " hat wert " << Kartenstapel[randWert].wert << "." << endl;	
+	}
+
+	if(arr[0]>arr[1])
+	{
+		cout << "Mit " << arr[0] << " Punkten hat Spieler 1 gegen Spieler 2 mit " << arr[1] << " Punkten gewonen!" << endl;
+	}
+	if(arr[0]<arr[1])
+	{
+		cout << "Mit " << arr[1] << " Punkten hat Spieler 2 gegen Spieler 1 mit " << arr[0] << " Punkten gewonen!" << endl;
+	}
+	if(arr[0]==arr[1])
+	{
+		cout << "Es ist unentschieden! Beide haben " << arr[0] << " points!" << endl;
+	}
+
+	cout<< endl;
+	cout<< "Wiederholen? j/n ";
+	cin >> wiederholung;
+	cout<< endl;
+    switch(wiederholung)
+    {
+        case 'j': 
+            gameLoop(Kartenstapel);
+            break;
+        case 'n': 
+            cout << "Tschues!";
+			Sleep(500);
+        default: 
+            break;
+    }
+}
+
+
+void verschiebung(struct Karte *Kartenstapel)
+{
+	struct Karte tmp;
+	for(int i = 0; i < 26; i++)
+	{
+		tmp = Kartenstapel[i];
+		Kartenstapel[i] = Kartenstapel[26+i];
+		Kartenstapel[26+i] = tmp;
+	}
+}
+
+void chek(struct Karte *Karten)
+{
+	for(int i = 0; i < 52; i++)
+	{
+		if(i==26)
+		{
+		cout << "-----MITEL-----" << endl;
+		}
+		cout << Karten[i].name <<" "<< Karten[i].farbe << " kostet "<< Karten[i].wert << endl;
+	}
+}
+
+
+int main()
+{
+	const char* farbeArr[] = {"Kreuz", "Pik", "Herz", "Karo"};
+	const char* nameArr[] = {"zwei", "drei", "vier", "fuenf", "sechs", "sieben", "acht", "neun", "zehn", "Bube", "Dame", "Koenig", "As"};
+	struct Karte newKarte[52]={};
+	Karte kartenstapel[52] = {};
+
+	initFunk(newKarte, farbeArr, nameArr);
+	cout <<"                         Initialisirung! " << endl;
+	chek(newKarte);
+	cout <<"                         Mischung! " << endl;
+	mixFunk(newKarte, kartenstapel);
+	chek(kartenstapel);
+	cout <<"                         Verschiebung! " << endl;
+	verschiebung(kartenstapel);
+	chek(kartenstapel);
+
+	gameLoop(kartenstapel);
+
+
+
+	return 0;
+}
