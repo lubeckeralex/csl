@@ -1,0 +1,182 @@
+#include<iostream>
+#include <string.h>
+#include<time.h>
+#include <windows.h>
+using namespace std;
+
+struct Karte
+{
+	char name[10];
+	char farbe[10];
+	int wert;
+};
+
+void randInit(Karte *karte)
+{
+	const char* farbeArr[] = {"Kreuz", "Pik", "Herz", "Karo"};
+	const char* nameArr[] = {"zwei", "drei", "vier", "fuenf", "sechs", "sieben", "acht", "neun", "zehn", "Bube", "Dame", "Koenig", "As"};
+	time_t tim;
+	srand( time(&tim));
+
+	for(int farbAnz = 0; farbAnz<4; farbAnz++)
+	{
+		for(int i = 0; i < 13;)
+		{
+			int randWert = rand()%52;
+			if(karte[randWert].wert == 0)
+			{
+				strcpy(karte[randWert].name, nameArr[i]);
+				strcpy(karte[randWert].farbe, farbeArr[farbAnz]);
+				karte[randWert].wert = i + 2;
+				if(karte[randWert].wert>10)
+				{
+					karte[randWert].wert = 10;
+				}
+				if(i == 12)
+				{
+					karte[randWert].wert = 11;
+				}
+				i++;
+			}
+		}
+	}
+}
+
+void myInit(Karte *karte)
+{
+	const char* farbeArr[] = {"Kreuz", "Pik", "Herz", "Karo"};
+	const char* nameArr[] = {"zwei", "drei", "vier", "fuenf", "sechs", "sieben", "acht", "neun", "zehn", "Bube", "Dame", "Koenig", "As"};
+	int x = 0;
+	for(int farbAnz = 0; farbAnz<4; farbAnz++)
+	{
+		for(int i = 0; i < 13; i++, x++)
+		{
+			strcpy(karte[x].name, nameArr[i]);
+			strcpy(karte[x].farbe, farbeArr[farbAnz]);
+			karte[x].wert = i + 2;
+			if(karte[x].wert>10)
+			{
+				karte[x].wert = 10;
+			}
+		}
+		karte[x-1].wert = 11;
+	}
+}
+
+void mixFunk(struct Karte *Kartenstapel)
+{
+	int x;
+	Karte tmp;
+	time_t tim;
+	srand( time(&tim) );
+	
+
+	for(int i = 0; i <= 51;)
+	{
+		int randWert = rand()%52;
+		if(randWert != i)
+		{
+			tmp = Kartenstapel[i];
+			Kartenstapel[i] = Kartenstapel[randWert];
+			Kartenstapel[randWert] = tmp;	
+			i++;
+		}
+	}
+}
+
+void verschiebung(struct Karte *Kartenstapel)
+{
+	struct Karte tmp;
+	for(int i = 0; i < 26; i++)
+	{
+		tmp = Kartenstapel[i];
+		
+		Kartenstapel[i] = Kartenstapel[26+i];
+		Kartenstapel[26+i] = tmp;
+	}
+}
+
+void chek(Karte *Karten)
+{
+	for(int i = 0; i < 52; i++)
+	{
+		cout << Karten[i].name <<" "<< Karten[i].farbe << " kostet "<< Karten[i].wert << endl;
+	}
+	cout << endl;
+}
+
+void gameLoop(struct Karte *Kartenstapel)
+{	
+	char wiederholung;
+	int arr[2] = {};
+	int nimmKarten[4] = {};
+	int spieler = 1;
+	time_t tim;
+	srand(time(&tim));
+	int randWert = 0;
+
+	for(int i = 0; i < 4; i++, spieler++)
+	{
+		if(spieler > 2)
+		{
+			spieler = 1;
+		}
+		
+		do
+		{
+			randWert = rand()%52;
+		}
+		while( (nimmKarten[0]==randWert)||(nimmKarten[1]==randWert)||(nimmKarten[2]==randWert)||(nimmKarten[3]==randWert) );
+
+
+		arr[spieler-1] = arr[spieler-1] + Kartenstapel[randWert].wert;	
+		cout << "Spieler " << spieler << " nimmt Karte. " ;
+		cout << "Das ist "<< Kartenstapel[randWert].name << " " << Kartenstapel[randWert].farbe <<  " hat wert " << Kartenstapel[randWert].wert << "." << endl;	
+	}
+
+	if(arr[0]>arr[1])
+	{
+		cout << "Mit " << arr[0] << " Punkten hat Spieler 1 gegen Spieler 2 mit " << arr[1] << " Punkten gewonen!" << endl;
+	}
+	if(arr[0]<arr[1])
+	{
+		cout << "Mit " << arr[1] << " Punkten hat Spieler 2 gegen Spieler 1 mit " << arr[0] << " Punkten gewonen!" << endl;
+	}
+	if(arr[0]==arr[1])
+	{
+		cout << "Es ist unentschieden! Beide haben " << arr[0] << " points!" << endl;
+	}
+
+	cout<< endl;
+	cout<< "Wiederholen? j/n ";
+	cin >> wiederholung;
+	cout<< endl;
+    switch(wiederholung)
+    {
+        case 'j': 
+            gameLoop(Kartenstapel);
+            break;
+        case 'n': 
+            cout << "Tschues!";
+			Sleep(500);
+        default: 
+            break;
+    }
+}
+
+int main()
+{
+	Karte kartenstapel[52] = {};
+
+	myInit(kartenstapel);
+	chek(kartenstapel);
+	
+	mixFunk(kartenstapel);
+	chek(kartenstapel);
+	
+	verschiebung(kartenstapel);
+	chek(kartenstapel);
+
+	gameLoop(kartenstapel);
+	return 0;
+}
