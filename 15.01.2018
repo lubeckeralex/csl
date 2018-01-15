@@ -1,0 +1,170 @@
+#include<iostream>
+#include<fstream>
+#include<iomanip>
+using namespace std;
+
+
+
+int main()
+{
+	ifstream ifl;
+	int i, buf;
+	char *filename = "values.dat";
+	ofstream ofl(filename);
+	if(!ofl)
+	{
+		cout << "n\Fehler beim oeffnen der Datei " << filename;
+		return(1);
+	}
+
+	cout << "Die hexadezimalen Zahlen\n\n";
+
+	for(i = 1; i <= 50; i++)
+	{
+		cout << hex << setw(4) << i;
+
+		ofl << hex << setw(4) << i;
+
+		if(i%10==0)
+		{
+			cout << endl;
+			ofl << endl;
+		}
+	}
+
+	cout << "\nwerden in eine Datei geschrieben ";
+	ofl.close();
+	cout << "und wieder daraus gelesen:\n\n";
+
+	ifl.open(filename);
+
+	if(!ifl)
+	{
+		cout << "\nFehler beim oeffnen der Datei " << filename;
+		return(1);
+	}
+	for(i = 1; i <=50; i++)
+	{
+		ifl >> hex >> buf;
+		cout << hex << setw(4) << buf;
+
+		if(i%10 == 0)
+		{
+			cout << endl;
+		}
+
+
+	}
+}
+
+
+/////////////////////////////////////////////////
+
+//#include<iostream>
+//#include<cstring>
+//#include<fstream>
+//#include<stdio.h>
+//using namespace std;
+//
+//
+//
+//void main()
+//{
+//
+//	ofstream schreiben;
+//	ifstream lesen;
+//	cout<<"Bitte Textzeilen eingeben. \n";
+//	cout<<"Ein einzelner Punkt in einer Zele\n";
+//	cout <<"Beendet die Eingabe" << endl;
+//
+//	schreiben.open("temp.txt", ios::app);
+//	if(!schreiben)
+//		{
+//			cout << "Ausgabedatei konnte nicht\n";
+//			cout << " geoffnet werden!"<<endl;
+//		}
+//	else
+//	{
+//	int stop = 0;
+//	char eingabe[160];
+//	while(!stop)
+//	{
+//		cin.getline(eingabe,160);
+//		if((strlen(eingabe)==1)&&(eingabe[0]=='.'))
+//		{
+//			stop = 1;
+//		}
+//		else
+//		{
+//			schreiben << eingabe<<endl;
+//		}
+//	}
+//	schreiben.close();
+//
+//	cout << "jetzt wird gelesen" << endl;
+//	lesen.open("temp.txt", ios::in);
+//	if(!lesen)
+//		{
+//			cout <<"Eingabedatei konnte nicht\n";
+//			cout << "geofnet werden! " << endl;
+//		}
+//	else
+//		{
+//			stop = 0;
+//			while(lesen.getline(eingabe, 160))
+//				{
+//					cout << eingabe << endl;
+//				}
+//			lesen.close();
+//		}
+//	}
+//}
+/////////////////////////////////////////////////////
+//#include<iostream>
+//#include<cstring>
+//#include<fstream>
+//#include<stdio.h>
+//using namespace std;
+//
+//void writedat(char *name)
+//{
+//	ofstream outdat(name);
+//	char inp[160];
+//	if(outdat)
+//	{
+//		cout << " : ";
+//		cin.getline(inp, 160);
+//		while(strcmp(inp,"-x"))
+//		{
+//		outdat << inp << endl;
+//		cout << " : ";
+//		cin.getline(inp, 160);
+//		}
+//	}
+//}
+//
+//void readdat(char *name)
+//{
+//	ifstream indat(name);
+//	char inp[160];
+//	if(indat)
+//	{
+//		indat.getline(inp, 160);
+//		while(!indat.eof())
+//		{
+//			cout << inp << endl;
+//			indat.getline(inp, 160);
+//		}
+//	}
+//
+//}
+//
+//int main()
+//{
+//	cout <<"Eingabe: \n-----------"<<endl;
+//	writedat("temp.txt");
+//	
+//	cout <<"\n\nAusgabe: \n-----------"<<endl;
+//	readdat("temp.txt");
+//
+//}
