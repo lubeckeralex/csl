@@ -1,0 +1,296 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+int holeStreckeGewicht (string SB, string SE)
+{
+	string str = SB + SE;
+
+
+
+    if(str == "AB")
+    {
+        return(130);
+    }
+    
+    if(str == "AD")
+    {
+        return(200);
+    }
+
+    if(str == "DE")
+    {
+        return(230);
+    }
+
+    if(str == "EB")
+    {
+        return(700);
+    }
+
+    if(str == "AC")
+    {
+        return(150);
+    }
+
+    if(str == "CB")
+    {
+        return(200);
+    }
+}
+
+double holeStreckePreis (string SB, string SE)
+{
+
+	string str = SB + SE;
+
+
+
+    if(str == "AB")
+    {
+        return(25);
+    }
+    
+    if(str == "AD")
+    {
+        return(15);
+    }
+
+    if(str == "DE")
+    {
+        return(15);
+    }
+
+    if(str == "EB")
+    {
+        return(15);
+    }
+
+    if(str == "AC")
+    {
+        return(6);
+    }
+
+    if(str == "CB")
+    {
+        return(5);
+    }
+}
+
+int findeRoute (int gewicht)
+{
+	char routen[3][5] = {      {'1', 'A', 'B', '0', '0'},
+							   {'2', 'A', 'C', 'B', '0'},
+                               {'3', 'A', 'D', 'E', 'B'}};
+
+    for(int k = 0; k < 3; k++)
+    {
+        for(int h = 0; h < 5; h++)
+        {
+            cout << routen[k][h] << "  ";
+
+            if(h == 4)
+            {
+                cout << endl;
+            }
+        }
+    }
+	
+    cout << "\n";
+
+    string SB[6] = {"A", "A", "D", "E", "A", "C"};
+    string SE[6] = {"B", "D", "E", "B", "C", "B"};
+
+    double freiKap[6];
+	double freiKapGes[3];
+    double frachtKost[6], frachtKostPro[3], frachtKostGes[3];
+
+    for(int i = 0; i < 6; i++)
+    {
+        freiKap[i] = holeStreckeGewicht(SB[i], SE[i]);
+        frachtKost[i] = holeStreckePreis(SB[i], SE[i]);
+
+        cout << "Freie Kapazitaet in kg fuer Strecke " << SB[i] << " nach " << SE[i] << ": " << freiKap[i] << " Frachtkosten " << frachtKost[i] << " EUR/kg" <<  endl;
+    }
+	/////////////
+
+    freiKapGes[0] = freiKap[0];
+    freiKapGes[1] = freiKap[1] + freiKap[2] + freiKap[3];
+    freiKapGes[2] = freiKap[4] + freiKap[5];
+
+    frachtKostPro[0] = frachtKost[0];
+    frachtKostPro[1] = frachtKost[1] + frachtKost[2] + frachtKost[3];
+    frachtKostPro[2] = frachtKost[4] + frachtKost[5];
+
+
+
+    for(int j = 0; j < 3; j++)
+    {
+        frachtKostGes[j] = frachtKostPro[j] * gewicht;
+    }
+
+
+
+    if(frachtKostGes[0] < frachtKostGes[1])
+    {
+        if(frachtKostGes[0] < frachtKostGes[2])
+        {
+            
+            if(gewicht <= freiKapGes[0])
+			{
+				cout << "Die Strecke A-B direkt ist mit " << frachtKostGes[0] << " Euro fuer die Frachtkosten Am guenstigsten!" << endl;
+                return(routen[0][0]);
+            }
+        }
+        else
+        {
+            cout << "Strecke A-B direkt ist am teuersten mit " << frachtKostGes[0] << "Euro!!" << endl;
+        }
+    }
+
+    if(frachtKostGes[1] < frachtKostGes[0])
+    {
+        if(frachtKostGes[1] < frachtKostGes[2])
+        {
+            cout << "Die Strecke A-B ueber C ist mit " << frachtKostGes[1] << " Euro fuer die Frachtkosten Am guenstigsten!" << endl;
+            return(2);
+        }
+        else
+        {
+            cout << "Strecke A-B ueber C ist am teuersten mit " << frachtKostGes[1] << "Euro!!" << endl;
+        }
+    }
+
+    if(frachtKostGes[2] < frachtKostGes[0])
+    {
+        if(frachtKostGes[2] < frachtKostGes[1])
+        {
+            cout << "Die Strecke A-B ueber D und E ist mit " << frachtKostGes[2] << " Euro fuer die Frachtkosten Am guenstigsten!" << endl;
+			return(3);
+        }
+        else
+        {
+            cout << "Strecke A-B ueber D und E ist am teuersten mit " << frachtKostGes[2] << "Euro!!" << endl;
+            
+        }
+    }
+}
+
+
+
+
+
+//int findeRoute2 (int gewicht)
+//{
+//    char routen[3][5] = {{'1', 'A', 'B', '0', '0'},
+//                         {'2', 'A', 'C', 'B', '0'},
+//                         {'3', 'A', 'D', 'E', 'B'}};
+//
+//    for(int k = 0; k < 3; k++)
+//    {
+//        for(int h = 0; h < 5; h++)
+//        {
+//            cout << routen[k][h] << "  ";
+//
+//            if(h == 4)
+//            {
+//                cout << endl;
+//            }
+//        }
+//    }
+//
+//    cout << "\n";
+//
+//    char SB[6] = {'A', 'A', 'D', 'E', 'A', 'C'};
+//    char SE[6] = {'B', 'D', 'E', 'B', 'C', 'B'};
+//
+//    int freiKap[6], freiKapGes[3];
+//    double frachtKost[6], frachtKostPro[3], frachtKostGes[3];
+//
+//    for(int i = 0; i < 6; i++)
+//    {
+//        freiKap[i] = holeStreckeGewicht(SB[i], SE[i]);
+//        frachtKost[i] = holeStreckePreis(SB[i], SE[i]);
+//
+//        cout << "Freie Kapazitaet in kg fuer Strecke " << SB[i] << " nach " << SE[i] << ": " << freiKap[i] << endl;
+//        cout << "Frachtkosten in EUR/kg fuer Strecke " << SB[i] << " nach " << SE[i] << ": " << frachtKost[i] << endl;
+//    }
+//
+//    freiKapGes[0] = freiKap[0];
+//    freiKapGes[1] = freiKap[1] + freiKap[2] + freiKap[3];
+//    freiKapGes[2] = freiKap[4] + freiKap[5];
+//
+//    frachtKostPro[0] = frachtKost[0];
+//    frachtKostPro[1] = frachtKost[1] + frachtKost[2] + frachtKost[3];
+//    frachtKostPro[2] = frachtKost[4] + frachtKost[5];
+//
+//    for(int j = 0; j < 3; j++)
+//    {
+//        frachtKostGes[j] = frachtKostPro[j] * gewicht;
+//    }
+//
+//    if(frachtKostGes[0] < frachtKostGes[1])
+//    {
+//        if(frachtKostGes[0] < frachtKostGes[2])
+//        {
+//            cout << "Die Strecke A-B direkt ist mit " << frachtKostGes[0] << " Euro fuer die Frachtkosten Am guenstigsten!" << endl;
+//
+//            if(gewicht <= freiKapGes[0])
+//            {
+//                return(routen[0][0]);
+//            }
+//        }
+//        else
+//        {
+//            cout << "Strecke A-B direkt ist am teuersten mit " << frachtKostGes[0] << "Euro!!" << endl;
+//        }
+//    }
+//
+//    if(frachtKostGes[1] < frachtKostGes[0])
+//    {
+//        if(frachtKostGes[1] < frachtKostGes[2])
+//        {
+//            cout << "Die Strecke A-B ueber D und E ist mit " << frachtKostGes[1] << " Euro fuer die Frachtkosten Am guenstigsten!" << endl;
+//            return(routen[1][0]);
+//        }
+//        else
+//        {
+//            cout << "Strecke A-B ueber D und E ist am teuersten mit " << frachtKostGes[1] << "Euro!!" << endl;
+//        }
+//    }
+//
+//    if(frachtKostGes[2] < frachtKostGes[0])
+//    {
+//        if(frachtKostGes[2] < frachtKostGes[1])
+//        {
+//            cout << "Die Strecke A-B ueber D und E ist mit " << frachtKostGes[2] << " Euro fuer die Frachtkosten Am guenstigsten!" << endl;
+//        }
+//        else
+//        {
+//            cout << "Strecke A-B ueber D und E ist am teuersten mit " << frachtKostGes[2] << "Euro!!" << endl;
+//            return(routen[2][0]);
+//        }
+//    }
+//}
+
+
+int main()
+{
+    int gewicht;
+    int x;
+
+    cout << "Wie viel Gewicht?" << endl;
+    cin >> gewicht;
+    //system("cls");
+
+    x = findeRoute(gewicht);
+
+    cout << "Index " << x << " ist die guenstigste Route!" << endl;
+}
+
+
+
+
+
+
